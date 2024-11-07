@@ -2,11 +2,9 @@
 {
     public class RoleEntity
     {
-        public int RoleId { get; set; }
-        public string RoleName { get; set; }
-        public string RoleDescription { get; set; }
-        public string RoleType { get; set; }
-        public List<RolePermissionModel> Permissions { get; set; } = new List<RolePermissionModel>();
-
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string SystemName { get; set; }
+        public string Description { get; set; }
     }
 }

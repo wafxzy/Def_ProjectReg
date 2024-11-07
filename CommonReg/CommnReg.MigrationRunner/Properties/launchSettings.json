@@ -1,7 +1,14 @@
 {
   "profiles": {
-    "CommnReg.MigrationRunner": {
-      "commandName": "Project"
+    "LOCAL_DB": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "CONNECTIONSTRING__PASSWORD": "Qwerty1!",
+        "CONNECTIONSTRING__DATABASE": "common_users_db",
+        "CONNECTIONSTRING__PORT": "5432",
+        "CONNECTIONSTRING__HOST": "localhost",
+        "CONNECTIONSTRING__USER": "postgres"
+      }
     },
     "Container (Dockerfile)": {
       "commandName": "Docker"

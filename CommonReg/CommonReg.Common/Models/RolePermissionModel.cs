@@ -2,11 +2,9 @@
 {
     public class RolePermissionModel
     {
-        public int PermissionId { get; set; }
-        public string PermissionName { get; set; }
-        public string PermissionDescription { get; set; }
-        // Связь с RoleEntity
         public int RoleId { get; set; }
-        public RoleEntity Role { get; set; }
+        public string RoleSystemName { get; set; }
+        public int PermissionId { get; set; }
+        public string PermissionSystemName { get; set; }
     }
 }

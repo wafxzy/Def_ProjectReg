@@ -15,6 +15,5 @@
         public bool IsActive { get; set; }
         public Guid ActivationCode { get; set; }
         public byte[] Avatar { get; set; }
-        public List<RoleEntity> Roles { get; set; } = new List<RoleEntity>();
     }
 }

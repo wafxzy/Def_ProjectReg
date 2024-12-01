@@ -8,6 +8,6 @@ namespace CommonReg.MigrationRunner.Interfaces
 {
     public interface IDatabaseMigrator
     {
-        void MigrateDatabase(long version);
+        void MigrateDatabase(long? version);
     }
 }

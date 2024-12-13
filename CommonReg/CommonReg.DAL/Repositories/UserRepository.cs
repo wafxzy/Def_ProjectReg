@@ -1,63 +1,122 @@
-﻿using CommonReg.Common.Models;
+﻿using CommonProject.DAL.Queries;
+using CommonReg.Common.Models;
 using CommonReg.DAL.Repositories.Interfaces;
+using Dapper;
 
 namespace CommonReg.DAL.Repositories
 {
     public class UserRepository : IUserRepository
     {
+        private readonly IDataBaseContext _dataBaseContext;
+
+        public UserRepository(IDataBaseContext dataBaseContext) {
+            _dataBaseContext = dataBaseContext;
+        }
+
         public Task DeleteUser(Guid userId)
         {
-            throw new NotImplementedException();
+            return _dataBaseContext.Connection.ExecuteAsync(
+              UserQueries.DELETE_USER,
+                new { Id = userId },transaction: _dataBaseContext.Transaction
+            );
         }
 
         public Task<IEnumerable<AccountEntity>> GetAllUsers()
         {
-            throw new NotImplementedException();
+            return _dataBaseContext.Connection.QueryAsync<AccountEntity>(
+                         UserQueries.GET_ALL_USERS,
+                         transaction: _dataBaseContext.Transaction
+                     );
         }
 
         public Task<UserForgotPasswordEntity> GetForgotUserPassByIdAndCode(Guid id, Guid code)
         {
-            throw new NotImplementedException();
+            return _dataBaseContext.Connection.QueryFirstOrDefaultAsync<UserForgotPasswordEntity>(
+                   UserQueries.SELECT_FORGOT_PASSWORD_BY_ID_AND_CODE,
+                   new { id,  code },
+                   transaction: _dataBaseContext.Transaction
+               );
         }
 
         public Task<AccountEntity> GetUserByEmail(string email)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(email) || !email.Contains('@'))
+            {
+                return null;
+            }
+            email = email.ToLowerInvariant();
+
+            return _dataBaseContext.Connection.QueryFirstOrDefaultAsync<AccountEntity>(
+                UserQueries.GET_USER_BY_EMAIL,
+                new { email },
+                transaction: _dataBaseContext.Transaction
+            );
         }
 
         public Task<AccountEntity> GetUserById(Guid id)
         {
-            throw new NotImplementedException();
+            return _dataBaseContext.Connection.QueryFirstOrDefaultAsync<AccountEntity>(
+                UserQueries.GET_USER_BY_ID,
+                new { id },
+                transaction: _dataBaseContext.Transaction
+            );
         }
 
         public Task<int> InsertUser(AccountEntity user)
         {
-            throw new NotImplementedException();
+           user.CreatedAt = DateTime.UtcNow;
+            user.UpdatedAt = DateTime.UtcNow;
+            return _dataBaseContext.Connection.ExecuteAsync(
+                UserQueries.INSERT_USER,
+                user,
+                transaction: _dataBaseContext.Transaction
+            );
         }
 
         public Task<int> InsertUserForgotPass(UserForgotPasswordEntity item)
         {
-            throw new NotImplementedException();
+            return _dataBaseContext.Connection.ExecuteAsync(
+                UserQueries.INSERT_USER_FORGOT_PASSWORD,
+                item,
+                transaction: _dataBaseContext.Transaction
+            );
         }
 
         public Task<int> SetInactiveUserForgotPass(Guid userId)
         {
-            throw new NotImplementedException();
+            return _dataBaseContext.Connection.ExecuteAsync(
+                UserQueries.SET_INACTIVE_FORGOT_PASSWORD,
+                new { UserId = userId },
+                transaction: _dataBaseContext.Transaction
+            );
         }
 
         public Task<int> UpdateActiveStatusById(Guid id, bool isActive)
         {
-            throw new NotImplementedException();
+     var parameters = new { id, isActive };
+            return _dataBaseContext.Connection.ExecuteAsync(
+                UserQueries.UPDATE_ACTIVE_STATUS,
+                parameters,
+                transaction: _dataBaseContext.Transaction
+            );
         }
 
         public Task<int> UpdatePassword(Guid userId, Guid passwordSalt, string passwordHash)
         {
-            throw new NotImplementedException();
+            return _dataBaseContext.Connection.ExecuteAsync(
+                 UserQueries.UPDATE_PASSWORD,
+                 new { userId, passwordSalt, passwordHash, UpdatedAt = DateTime.UtcNow },
+                 transaction: _dataBaseContext.Transaction
+             );
         }
 
         public Task<int> UpdateUser(AccountEntity entity)
         {
-            throw new NotImplementedException();
+            return _dataBaseContext.Connection.ExecuteAsync(
+                     UserQueries.UPDATE_USER,
+                     entity,
+                     transaction: _dataBaseContext.Transaction
+                 );
         }
     }
 }

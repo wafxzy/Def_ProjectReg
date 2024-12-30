@@ -3,17 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonReg.API", "CommonRegProject\CommonReg.API.csproj", "{C650484B-7530-4A17-8C47-E13F618F6F48}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonReg.API", "CommonRegProject\CommonReg.API.csproj", "{C650484B-7530-4A17-8C47-E13F618F6F48}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonReg.MigrationRunner", "CommnReg.MigrationRunner\CommonReg.MigrationRunner.csproj", "{9ADB64C1-B6B7-41F8-BCC9-17BE8106D1C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonReg.MigrationRunner", "CommnReg.MigrationRunner\CommonReg.MigrationRunner.csproj", "{9ADB64C1-B6B7-41F8-BCC9-17BE8106D1C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonReg.DAL", "CommonReg.DAL\CommonReg.DAL.csproj", "{7532E52B-9997-4B5C-9378-26354AB486A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonReg.DAL", "CommonReg.DAL\CommonReg.DAL.csproj", "{7532E52B-9997-4B5C-9378-26354AB486A1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonReg.BLL", "CommonReg.BLL\CommonReg.BLL.csproj", "{17DEE21E-3264-4F59-876C-AFB125BA7B32}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonReg.BLL", "CommonReg.BLL\CommonReg.BLL.csproj", "{17DEE21E-3264-4F59-876C-AFB125BA7B32}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7532E52B-9997-4B5C-9378-26354AB486A1} = {7532E52B-9997-4B5C-9378-26354AB486A1}
+		{9697C595-9346-41AE-AE5E-E90B396EEAE4} = {9697C595-9346-41AE-AE5E-E90B396EEAE4}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonReg.Common", "CommonReg.Common\CommonReg.Common.csproj", "{27EE9C58-9B93-4FEE-BE76-3982061CBA2B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonReg.Common", "CommonReg.Common\CommonReg.Common.csproj", "{27EE9C58-9B93-4FEE-BE76-3982061CBA2B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonReg.EmailSender", "CommonReg.EmailSender\CommonReg.EmailSender.csproj", "{9697C595-9346-41AE-AE5E-E90B396EEAE4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonReg.EmailSender", "CommonReg.EmailSender\CommonReg.EmailSender.csproj", "{9697C595-9346-41AE-AE5E-E90B396EEAE4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

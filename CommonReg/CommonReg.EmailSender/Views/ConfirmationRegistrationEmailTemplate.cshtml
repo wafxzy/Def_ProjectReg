@@ -1,0 +1,86 @@
+﻿@model CommonReg.EmailSender.Models.ConfirmationRegistrationViewModel;
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <table width="620" style="width:620px;max-width:620px;margin:0 auto; border-spacing: 0; font-family: 'Montserrat', sans-serif;">
+        <thead>
+            <tr>
+                <td style="background-image: url(@Model.HeadUrl);
+						background-position: center top;
+						background-repeat: no-repeat;
+						background-size: cover;
+						background-color: #242424;
+                        padding:30px 70px;">
+                    <div>
+                        <div style="text-align:left; margin-bottom: 46px;">
+                            <img style="width:38px;" width="38" src="@Model.LogoUrl" alt="logo">
+                        </div>
+                        <div style="font-weight: bold;
+							font-size: 36px;
+							line-height: 43px;
+							text-transform: uppercase;
+							text-align: left;
+							color: #fff;
+							margin-bottom: 50px;">
+                            <span style="color: #F5DF4D;">hello</span><span style="color: #F5DF4D;"> @Model.UserName,</span> <br>
+                            Thank you for <br>
+                            registering!
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </thead>
+        <tbody style="color: #242424;">
+            <tr>
+                <td style="background-color: #f9f9f9; padding: 40px; text-align: center;">
+                    <div style="font-weight: 500;
+						font-size: 14px;
+						line-height: 20px;
+						text-transform: uppercase;
+						margin-bottom: 40px;">
+                        Please confirm your account registration by clicking on The Button Below.
+                    </div>
+                    <div style="margin-bottom: 40px;">
+                        <a href="@Model.Link"
+                           style="
+                            display:inline-block;
+                            max-width: 460px;
+                            width: 100%;
+							background: #F5DF4D;
+							box-shadow: 0px 1.98701px 5.2987px rgba(0, 0, 0, 0.1);
+							border-top-left-radius: 4px;
+							border-top-right-radius: 4px;
+							border-bottom-left-radius: 4px;
+							border-bottom-right-radius: 4px;
+							cursor: pointer;
+							margin: 0 auto;
+                            mso-hide:all;
+                            height: 50px;
+                            line-height: 50px;
+							text-decoration: none;
+							border: 0;
+							font-size: 14px;
+							font-weight: 500;
+							color: #242424;
+                            ">Confirm</a>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td style="background-color: #f9f9f9; padding: 20px; border-top: 5px solid #242424;">
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</body>
+</html>

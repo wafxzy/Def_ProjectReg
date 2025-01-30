@@ -13,6 +13,5 @@ namespace CommonReg.Common.UIModels
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Age { get; set; }
-        public Byte[] Avatar { get; set; }
     }
 }

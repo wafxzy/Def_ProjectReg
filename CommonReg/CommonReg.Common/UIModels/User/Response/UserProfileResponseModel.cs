@@ -14,6 +14,5 @@ namespace CommonReg.Common.UIModels.User.Response
         public int Age { get; set; }
         public string Email { get; set; }
         public IEnumerable<RoleResponseModel> Roles { get; set; }
-        public byte[] Avatar { get; set; }
     }
 }

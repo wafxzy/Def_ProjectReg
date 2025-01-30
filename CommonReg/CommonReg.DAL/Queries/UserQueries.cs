@@ -10,7 +10,6 @@ public static class UserQueries
     public const string INSERT_USER = @"
 INSERT INTO users (
      id
-    ,username
     ,first_name
     ,last_name
     ,email
@@ -21,11 +20,9 @@ INSERT INTO users (
     ,updated_at
     ,is_active
     ,activation_code
-    ,avatar
     )
 VALUES (
     @Id
-    ,@Username
     ,@FirstName
     ,@LastName
     ,@Email
@@ -36,7 +33,6 @@ VALUES (
     ,@UpdatedAt
     ,@IsActive
     ,@ActivationCode
-    ,@Avatar
     );";
 
     public const string UPDATE_PASSWORD = @"UPDATE users
@@ -44,7 +40,7 @@ VALUES (
                         WHERE id = @Id;";
 
     public const string UPDATE_USER = @"UPDATE users
-                        SET first_name = @FirstName, last_name = @LastName, age = @Age, updated_at = @UpdatedAt, avatar = @Avatar
+                        SET first_name = @FirstName, last_name = @LastName, age = @Age, updated_at = @UpdatedAt, 
                         WHERE id = @Id;";
 
     public const string INSERT_USER_FORGOT_PASSWORD = @"INSERT INTO user_forgot_password (user_id, code, is_active, created_at) 

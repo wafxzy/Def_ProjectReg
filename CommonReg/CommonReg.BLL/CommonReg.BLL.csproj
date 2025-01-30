@@ -15,6 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\CommonReg.Common\CommonReg.Common.csproj" />
     <ProjectReference Include="..\CommonReg.DAL\CommonReg.DAL.csproj" />
+    <ProjectReference Include="..\CommonReg.EmailSender\CommonReg.EmailSender.csproj" />
   </ItemGroup>
 
 </Project>

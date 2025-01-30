@@ -1,4 +1,6 @@
 ﻿using CommonReg.Common.JWTToken.Models;
+using CommonReg.Common.Models;
+using CommonReg.Common.UIModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;

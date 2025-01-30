@@ -11,7 +11,6 @@ CREATE EXTENSION IF NOT EXISTS ""uuid-ossp"";
         public const string CREATE_USERS = @"
 CREATE TABLE IF NOT EXISTS users(
     id uuid NOT NULL DEFAULT uuid_generate_v4(),
-    username varchar(120) NOT NULL,
     first_name varchar(120) NOT NULL,
     last_name varchar(120) NOT NULL,
     email varchar(120) NOT NULL,
@@ -22,7 +21,6 @@ CREATE TABLE IF NOT EXISTS users(
     updated_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
     is_active bool NOT NULL DEFAULT false,
     activation_code uuid NOT NULL DEFAULT uuid_generate_v4(),
-    avatar bytea NOT NULL,
     CONSTRAINT user_pkey PRIMARY KEY(id)
 );";
 

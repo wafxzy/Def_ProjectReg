@@ -16,6 +16,5 @@ namespace CommonReg.Common.UIModels.User.Response
         public bool IsActive { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedDate { get; set;}
-        public byte[] Avatar { get; set; }
     }
 }

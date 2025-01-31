@@ -1,4 +1,4 @@
-
+﻿
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
@@ -11,7 +11,21 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
+    <PackageReference Include="Sentry.Serilog" Version="5.0.1" />
+    <PackageReference Include="Serilog" Version="4.2.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="8.0.3" />
+    <PackageReference Include="Serilog.Extensions.Logging" Version="9.0.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="7.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CommnReg.MigrationRunner\CommonReg.MigrationRunner.csproj" />
+    <ProjectReference Include="..\CommonReg.BLL\CommonReg.BLL.csproj" />
+    <ProjectReference Include="..\CommonReg.Common\CommonReg.Common.csproj" />
+    <ProjectReference Include="..\CommonReg.DAL\CommonReg.DAL.csproj" />
+    <ProjectReference Include="..\CommonReg.EmailSender\CommonReg.EmailSender.csproj" />
   </ItemGroup>
 
 </Project>

@@ -24,8 +24,7 @@ namespace CommonReg.BLL.Mappers
                 Age = accountEntity.Age,
                 IsActive = accountEntity.IsActive,
                 CreatedDate = accountEntity.CreatedAt,
-                UpdatedDate = accountEntity.UpdatedAt,
-                Avatar = accountEntity.Avatar
+                UpdatedDate = accountEntity.UpdatedAt
             };
         }
 
@@ -44,7 +43,6 @@ namespace CommonReg.BLL.Mappers
                 LastName = accountEntity.LastName,
                 Age = accountEntity.Age,
                 Roles = userRoleModels.Select(MapToUserRoleResponseModel),
-                Avatar = accountEntity.Avatar
             };
         }
 

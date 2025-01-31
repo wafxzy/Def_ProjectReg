@@ -12,11 +12,8 @@ using CommonReg.EmailSender.EmailTemplates;
 using CommonReg.EmailSender.Models;
 using CommonReg.EmailSender.Services.Interfaces;
 using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace CommonReg.BLL.Services
 {
@@ -90,9 +87,10 @@ namespace CommonReg.BLL.Services
             return _unitOfWork.UserRepository.GetForgotUserPassByIdAndCode(id, code);
         }
 
-        public Task<TokenResult> GetToken(Guid userId, string userAgent)
+        public async Task<TokenResult> GetToken(Guid userId, string userAgent)
         {
-            throw new NotImplementedException();
+            AccountEntity accountEntity = await _unitOfWork.UserRepository.GetUserById(userId);
+            return await GetToken(accountEntity, userAgent);
         }
 
         public async Task<TokenResult> GetToken(AccountEntity accountEntity, string userAgent)
@@ -147,9 +145,73 @@ namespace CommonReg.BLL.Services
             return await GetToken(accountEntity, userAgent);
         }
 
-        public Task<TokenResult> RefreshToken(RefreshTokenRequestModel refreshTokenRequest, string userAgent)
+        public async  Task<TokenResult> RefreshToken(RefreshTokenRequestModel refreshTokenRequest, string userAgent)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(refreshTokenRequest.AccessToken))
+            {
+                return TokenResultHelper.InvalidAccessTokenFormat;
+            }
+
+            ClaimsPrincipal tokenClaimsPrincipal = ClaimsPrincipalHelper.InternalGetPrincipal(refreshTokenRequest.AccessToken);
+
+            if (tokenClaimsPrincipal == null)
+            {
+                return TokenResultHelper.InvalidAccessTokenFormat;
+            }
+
+            Claim sessionIdClaim = tokenClaimsPrincipal.FindFirst(x => x.Type == JwtRegisteredClaimNames.Sid);
+            Claim tokenIdClaim = tokenClaimsPrincipal.FindFirst(x => x.Type == JwtRegisteredClaimNames.Jti);
+            Claim userIdClaim = tokenClaimsPrincipal.FindFirst(x => x.Type == ClaimTypes.NameIdentifier);
+
+            if (sessionIdClaim == null
+                || tokenIdClaim == null
+                || userIdClaim == null
+                || string.IsNullOrWhiteSpace(sessionIdClaim.Value)
+                || string.IsNullOrWhiteSpace(userIdClaim.Value)
+                || !int.TryParse(sessionIdClaim.Value, out int sessionId)
+                || !Guid.TryParse(tokenIdClaim.Value, out Guid tokenId)
+                || !Guid.TryParse(userIdClaim.Value, out Guid userId)
+            )
+            {
+                return TokenResultHelper.InvalidAccessTokenBody;
+            }
+
+            UserSessionsEntity session = await _unitOfWork.UserSessionRepository.GetSession(sessionId);
+            if (session == null
+                || session.RefreshToken != tokenId
+                || session.UserId != userId
+                || session.ExpireDate < DateTime.UtcNow)
+            {
+                return TokenResultHelper.ExpiredAccessToken;
+            }
+
+            AccountEntity accountEntity = await _unitOfWork.UserRepository.GetUserById(userId);
+            List<string> userRoles = (await _unitOfWork.UserRoleRepository.GetUserRoles(accountEntity.Id)).Select(x => x.RoleName).ToList();
+            List<int> userPermissions = (await _unitOfWork.UserRoleRepository.GetUserRolePermissions(accountEntity.Id)).ToList();
+
+            Guid refreshToken = Guid.NewGuid();
+            DateTime currentTime = DateTime.UtcNow;
+            DateTime expireRefreshDate = currentTime.AddMinutes(AuthOptions.TOKEN_LIFE_TIME_MINUTES);
+
+
+            session.RefreshToken = refreshToken;
+            session.UpdatedDate = currentTime;
+            session.ExpireRefreshDate = expireRefreshDate;
+            session.UserAgent = userAgent.Truncate(1024);
+
+            session = await _unitOfWork.UserSessionRepository.UpdateSession(session);
+
+            if (session == null)
+            {
+                return TokenResultHelper.ExpiredAccessToken;
+            }
+
+            _unitOfWork.Commit();
+
+            TokenResult tokenResult = TokenResultHelper.InternalGenerateToken(session.SessionId, accountEntity.Id, session.RefreshToken, session.ExpireRefreshDate,
+                accountEntity.Email, userRoles, userPermissions);
+
+            return tokenResult;
         }
 
         public async Task<bool> Registration(RegistrationRequestModel user)
@@ -187,9 +249,15 @@ namespace CommonReg.BLL.Services
         }
        
 
-        public Task<int> RestoreUserPassword(Guid userId, string password)
+        public async  Task<int> RestoreUserPassword(Guid userId, string password)
         {
-            throw new NotImplementedException();
+        Guid guid = Guid.NewGuid();
+            string passwordHash = HashPasswordHelper.CalculatePasswordHash(password, guid);
+            await _unitOfWork.UserRepository.UpdatePassword(userId,  guid, passwordHash);
+
+            int result = await _unitOfWork.UserRepository.SetInactiveUserForgotPass(userId);
+            _unitOfWork.Commit();
+            return result;
         }
 
         public async Task<AccountEntity> SendConfirmationRegistrationAgain(string email)
@@ -204,9 +272,17 @@ namespace CommonReg.BLL.Services
             return existedUser;
         }
 
-        public Task<AccountEntity> SetActive(ConfirmRegistrationRequestModel model)
+        public async Task<AccountEntity> SetActive(ConfirmRegistrationRequestModel model)
         {
-            throw new NotImplementedException();
+           AccountEntity accountEntity = await _unitOfWork.UserRepository.GetUserById(model.UserId);
+            if (accountEntity != null && accountEntity.ActivationCode==model.Code)
+            {
+                await _unitOfWork.UserRepository.UpdateActiveStatusById(model.UserId,true);
+                _unitOfWork.Commit();
+                return accountEntity;
+            }
+            return accountEntity;
+           
         }
     
         private async Task<AccountEntity> GetUserByLoginAndPassword(string email, string password)

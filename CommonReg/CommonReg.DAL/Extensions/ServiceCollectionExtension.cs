@@ -14,7 +14,7 @@ namespace CommonReg.DAL.Extensions
 
             services.AddSingleton<IConnectionStringResolver, ConnectionStringResolver>();
             services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
-            services.AddScoped<IConnectionStringResolver, ConnectionStringResolver>();
+            services.AddScoped<IDataBaseContext, DataBaseContext>();
             services.AddScoped<IUserRepository, Repositories.UserRepository>();
             services.AddScoped<IUserSessionRepository, Repositories.UserSessionRepository>();
             services.AddScoped<IUserRoleRepository, Repositories.UserRoleRepository>();

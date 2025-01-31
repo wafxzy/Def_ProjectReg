@@ -113,4 +113,3 @@ public static class TokenResultHelper
         ErrorDescription = "Account requires activation. Please find an email with the details in your inbox."
     };
    }
-}

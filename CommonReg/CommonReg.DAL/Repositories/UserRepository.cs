@@ -64,8 +64,8 @@ namespace CommonReg.DAL.Repositories
 
         public Task<int> InsertUser(AccountEntity user)
         {
-           user.CreatedAt = DateTime.UtcNow;
-            user.UpdatedAt = DateTime.UtcNow;
+           user.CreatedDate = DateTime.UtcNow;
+            user.UpdatedDate = DateTime.UtcNow;
             return _dataBaseContext.Connection.ExecuteAsync(
                 UserQueries.INSERT_USER,
                 user,

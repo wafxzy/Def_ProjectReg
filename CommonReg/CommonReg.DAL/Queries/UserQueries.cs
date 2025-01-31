@@ -16,8 +16,8 @@ INSERT INTO users (
     ,age
     ,password_salt
     ,password_hash
-    ,created_at
-    ,updated_at
+    ,created_date
+    ,updated_date
     ,is_active
     ,activation_code
     )
@@ -29,22 +29,22 @@ VALUES (
     ,@Age
     ,@PasswordSalt
     ,@PasswordHash
-    ,@CreatedAt
-    ,@UpdatedAt
+    ,@CreatedDate
+    ,@UpdatedDate
     ,@IsActive
     ,@ActivationCode
     );";
 
     public const string UPDATE_PASSWORD = @"UPDATE users
-                        SET password_salt = @PasswordSalt, password_hash = @PasswordHash, updated_at = @UpdatedAt
+                        SET password_salt = @PasswordSalt, password_hash = @PasswordHash, updated_date = @UpdatedAt
                         WHERE id = @Id;";
 
     public const string UPDATE_USER = @"UPDATE users
-                        SET first_name = @FirstName, last_name = @LastName, age = @Age, updated_at = @UpdatedAt, 
+                        SET first_name = @FirstName, last_name = @LastName, age = @Age, updated_date = @UpdatedAt, 
                         WHERE id = @Id;";
 
-    public const string INSERT_USER_FORGOT_PASSWORD = @"INSERT INTO user_forgot_password (user_id, code, is_active, created_at) 
-                      VALUES (@UserId, @Code, @IsActive, @CreatedAt);";
+    public const string INSERT_USER_FORGOT_PASSWORD = @"INSERT INTO user_forgot_password (user_id, code, is_active, created_date) 
+                      VALUES (@UserId, @Code, @IsActive, @CreatedDate);";
 
     public const string UPDATE_ACTIVE_STATUS = @"
 UPDATE users

@@ -28,6 +28,22 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
+    "CommonReg_LOCAL": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "applicationUrl": "https://localhost:7171;http://localhost:5171",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "CONNECTIONSTRING__PASSWORD": "Qwerty1!",
+        "CONNECTIONSTRING__DATABASE": "common_users_db",
+        "CONNECTIONSTRING__PORT": "5432",
+        "CONNECTIONSTRING__HOST": "localhost",
+        "CONNECTIONSTRING__USER": "postgres",
+        "FRONTEND_SERVICE_URL": "localhost:4200"
+      }
+    },
     "Container (Dockerfile)": {
       "commandName": "Docker",
       "launchBrowser": true,

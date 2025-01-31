@@ -1,18 +1,15 @@
-﻿using System.Data;
+﻿using Npgsql;
+using System.Data;
 
 namespace CommonReg.DAL
 {
     public class DataBaseContext : IDataBaseContext
     {
         public Guid Id { get; private set; }
-        public IDbConnection Connection { get; private set; }
+
         public IDbTransaction Transaction { get; private set; }
 
-        private void Connect(string connectionString)
-        {
-            Connection = new Npgsql.NpgsqlConnection(connectionString);
-            Connection.Open();
-        }
+        public IDbConnection Connection { get; private set; }
 
         public DataBaseContext(IConnectionStringResolver connectionStringResolver)
         {
@@ -20,39 +17,34 @@ namespace CommonReg.DAL
             Connect(connectionStringResolver.Resolve);
         }
 
-        public void BeginTransaction()
+        private void Connect(string connectionString)
         {
-            if (Transaction != null)
-            {
-                throw new InvalidOperationException("Transaction already exists");
-            }
-
-            Transaction = Connection.BeginTransaction();
-
+            Connection = new NpgsqlConnection(connectionString);
+            Connection.Open();
         }
+
         public void Commit()
         {
             if (Transaction == null)
             {
-                throw new InvalidOperationException("Transaction does not exist");
+                throw new InvalidOperationException("There is no opened transaction");
             }
 
             Transaction.Commit();
         }
 
-        public void RollBack()
+        public void BeginTransaction()
         {
-            if (Transaction == null)
+            if (Transaction != null)
             {
-                throw new InvalidOperationException("Transaction does not exist");
+                throw new InvalidOperationException("More than one transaction cannot be created");
             }
 
-            Transaction.Rollback();
+            Transaction = Connection.BeginTransaction();
         }
 
         public void Dispose()
         {
-
             Transaction?.Dispose();
             Connection?.Dispose();
 
@@ -60,6 +52,16 @@ namespace CommonReg.DAL
             Connection = null;
 
             GC.SuppressFinalize(this);
+        }
+
+        public void Rollback()
+        {
+            if (Transaction == null)
+            {
+                throw new InvalidOperationException("There is no opened transaction");
+            }
+
+            Transaction.Rollback();
         }
     }
 }

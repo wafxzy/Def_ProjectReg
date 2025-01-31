@@ -23,8 +23,8 @@ namespace CommonReg.BLL.Mappers
                 LastName = accountEntity.LastName,
                 Age = accountEntity.Age,
                 IsActive = accountEntity.IsActive,
-                CreatedDate = accountEntity.CreatedAt,
-                UpdatedDate = accountEntity.UpdatedAt
+                CreatedDate = accountEntity.CreatedDate,
+                UpdatedDate = accountEntity.UpdatedDate
             };
         }
 

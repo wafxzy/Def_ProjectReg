@@ -45,23 +45,26 @@ namespace CommonReg.BLL.Services
             return result;
         }
 
+
         public async Task<int> ForgotPassword(AccountEntity user)
         {
             Guid code = Guid.NewGuid();
-            UserForgotPasswordEntity userForgotPassword = new UserForgotPasswordEntity
+
+            UserForgotPasswordEntity entity = new()
             {
                 UserId = user.Id,
                 Code = code,
+                IsActive = true,
                 CreatedDate = DateTime.Now
             };
-            int result = await _unitOfWork.UserRepository.InsertUserForgotPass(userForgotPassword);
+            int result = await _unitOfWork.UserRepository.InsertUserForgotPass(entity);
             _unitOfWork.Commit();
 
             if (result > 0)
             {
-
                 await SendForgotPasswordEmail(user.Id, code, user.Email);
             }
+
             return result;
         }
 
@@ -237,8 +240,8 @@ namespace CommonReg.BLL.Services
                 PasswordHash = passwordHash,
                 ActivationCode = activationCode,
                 IsActive = false,
-                CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow,
+                CreatedDate = DateTime.UtcNow,
+                UpdatedDate = DateTime.UtcNow,
                 Age = int.Parse(user.Age),
             };
             await _unitOfWork.UserRepository.InsertUser(accountEntity);

@@ -17,8 +17,8 @@ CREATE TABLE IF NOT EXISTS users(
     age int NOT NULL,
     password_salt uuid NOT NULL,
     password_hash varchar(240) NOT NULL,
-    created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_date timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_date timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
     is_active bool NOT NULL DEFAULT false,
     activation_code uuid NOT NULL DEFAULT uuid_generate_v4(),
     CONSTRAINT user_pkey PRIMARY KEY(id)

@@ -9,8 +9,8 @@
         public int Age { get; set; }
         public Guid PasswordSalt { get; set; }
         public string PasswordHash { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public DateTime UpdatedAt { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public DateTime UpdatedDate { get; set; }
         public bool IsActive { get; set; }
         public Guid ActivationCode { get; set; }
     }

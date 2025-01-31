@@ -91,7 +91,7 @@ namespace CommonReg.BLL.Services
 
             if (existedUser == null) return false;
 
-            existedUser.UpdatedAt = DateTime.UtcNow;
+            existedUser.UpdatedDate = DateTime.UtcNow;
             existedUser.FirstName = updateUserRequestModel.FirstName;
             existedUser.LastName = updateUserRequestModel.LastName;
 

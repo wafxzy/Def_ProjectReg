@@ -14,7 +14,7 @@ namespace CommonReg.EmailSender.Helpers
         private const string BASE_FOLDER_NAME = "Views.";
         private const string IMAGE_FOLDER_NAME = "Images";
         private const string LOGO_IMAGE = "image.png";
-        private const string SIGNATURE_IMAGE_NAME = "smth.png";
+        private const string SIGNATURE_IMAGE_NAME = "logo.png";
 
         private static readonly RazorLightEngine _engine = new RazorLightEngineBuilder()
                    .UseEmbeddedResourcesProject(typeof(CommonRegEmailAssemblyMarket))

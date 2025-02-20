@@ -28,10 +28,11 @@ namespace CommonReg.EmailSender.EmailTemplates
         {
             return EmailTemplateGeneratorHelper.GenerateTemplateAsync(nameof(ConfirmationRegistrationEmailTemplate), _viewModel);
         }
-
+   private static string EmailSubject => "Confirm your account";
         protected override string GetSubject()
         {
-            throw new NotImplementedException();
+            return EmailSubject;
         }
+     
     }
 }
